@@ -33,7 +33,6 @@ function getPicture(searchParams) {
     })
     .then(({ hits }) => {
       if (hits.length > 0) {
-        console.log(hits);
         loaderEl.style.display = 'none';
         gallery.innerHTML = renderImages(hits);
         new SimpleLightbox('.gallery a', {
