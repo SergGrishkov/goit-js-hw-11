@@ -42,7 +42,7 @@ function getPicture(searchParams) {
           close: true,
           enableKeyboard: true,
           docClose: true,
-        });
+        }).refresh();
       } else {
         iziToast.error({
           position: 'topRight',
