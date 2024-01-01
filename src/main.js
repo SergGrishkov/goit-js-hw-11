@@ -63,6 +63,7 @@ function getPicture(searchParams) {
 formEl.addEventListener('click', e => {
   e.preventDefault();
   if (e.target.type === 'submit') {
+    gallery.innerHTML = '';
     loaderEl.style.display = 'block';
     params.q = inputEl.value;
     getPicture(params);
