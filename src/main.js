@@ -18,6 +18,15 @@ const params = {
   safesearch: true,
 };
 
+const galleryImg = new SimpleLightbox('.gallery a', {
+  nav: true,
+  captionDelay: 250,
+  captionsData: 'alt',
+  close: true,
+  enableKeyboard: true,
+  docClose: true,
+});
+
 document.addEventListener('DOMContentLoaded', () => {
   loaderEl.style.display = 'none';
 });
@@ -35,14 +44,7 @@ function getPicture(searchParams) {
       if (hits.length > 0) {
         loaderEl.style.display = 'none';
         gallery.innerHTML = renderImages(hits);
-        new SimpleLightbox('.gallery a', {
-          nav: true,
-          captionDelay: 250,
-          captionsData: 'alt',
-          close: true,
-          enableKeyboard: true,
-          docClose: true,
-        }).refresh();
+        galleryImg.refresh();
       } else {
         iziToast.error({
           position: 'topRight',
@@ -60,14 +62,12 @@ function getPicture(searchParams) {
     });
 }
 
-formEl.addEventListener('click', e => {
+formEl.addEventListener('submit', e => {
   e.preventDefault();
-  if (e.target.type === 'submit') {
-    gallery.innerHTML = '';
-    loaderEl.style.display = 'block';
-    params.q = inputEl.value;
-    getPicture(params);
-  }
+  gallery.innerHTML = '';
+  loaderEl.style.display = 'block';
+  params.q = inputEl.value;
+  getPicture(params);
 });
 
 function renderImages(listImages) {
