@@ -10,6 +10,10 @@ const loaderEl = document.querySelector('body>span');
 
 const BASE_URL = 'https://pixabay.com/api/';
 
+function loaderDisplayStatus(status = 'none') {
+  loaderEl.style.display = status;
+}
+
 const params = {
   key: '41531560-af55148938f1784ffe04592f4',
   q: '',
@@ -28,21 +32,21 @@ const galleryImg = new SimpleLightbox('.gallery a', {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  loaderEl.style.display = 'none';
+  loaderDisplayStatus();
 });
 
 function getPicture(searchParams) {
   return fetch(`${BASE_URL}?${new URLSearchParams(searchParams)}`)
     .then(response => {
       if (!response.ok) {
-        loaderEl.style.display = 'none';
+        loaderDisplayStatus();
         throw Error(response.status);
       }
       return response.json();
     })
     .then(({ hits }) => {
       if (hits.length > 0) {
-        loaderEl.style.display = 'none';
+        loaderDisplayStatus();
         gallery.innerHTML = renderImages(hits);
         galleryImg.refresh();
       } else {
@@ -51,7 +55,7 @@ function getPicture(searchParams) {
           message:
             'Sorry, there are no images matching your search query. Please try again!',
         });
-        loaderEl.style.display = 'none';
+        loaderDisplayStatus();
       }
     })
     .catch(e => {
@@ -65,7 +69,7 @@ function getPicture(searchParams) {
 formEl.addEventListener('submit', e => {
   e.preventDefault();
   gallery.innerHTML = '';
-  loaderEl.style.display = 'block';
+  loaderDisplayStatus('block');
   params.q = inputEl.value;
   getPicture(params);
 });
