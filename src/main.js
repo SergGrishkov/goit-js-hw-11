@@ -40,7 +40,7 @@ function getPicture(searchParams) {
     .then(response => {
       if (!response.ok) {
         loaderDisplayStatus();
-        throw Error(response.status);
+        throw new Error(response.status);
       }
       return response.json();
     })
@@ -70,7 +70,7 @@ formEl.addEventListener('submit', e => {
   e.preventDefault();
   gallery.innerHTML = '';
   loaderDisplayStatus('block');
-  params.q = inputEl.value;
+  params.q = e.target.elements.search.value.trim();
   getPicture(params);
 });
 
